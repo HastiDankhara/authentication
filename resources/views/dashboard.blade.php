@@ -42,10 +42,10 @@
 <body>
     <div class="container">
         <div class="card">
-            <h2>Welcome, {{ Auth::user()->name }}!</h2>
+            <h2>Welcome, {{ Auth::guard('member')->user()->name }}!</h2>
 
             <div class="info">
-                <p><b>Email:</b> {{ Auth::user()->email }}</p>
+                <p><b>Email:</b> {{ Auth::guard('member')->user()->email }}</p>
             </div>
 
             <div class="logout">

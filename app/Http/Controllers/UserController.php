@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('member')->attempt($credentials)) {
             return redirect()->route('dashboard');
         } else {
             return redirect()->route('login')
@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        if (Auth::check()) {
+        if (Auth::guard('member')->check()) {
             return view('dashboard');
         }else{
             return redirect()->route('login');
@@ -56,7 +56,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('member')->logout();
         return redirect()->route('login');
     }
 }
