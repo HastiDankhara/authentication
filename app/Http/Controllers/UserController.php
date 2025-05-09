@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Member;
+// use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -17,7 +19,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $user = new User();
+        $user = new Member();
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
@@ -35,10 +37,13 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('dashboard');
-        }else{
-            return redirect()->route('login');
-        }
+        } else {
+            return redirect()->route('login')
+            ->withErrors(['email' => 'Invalid email', 'password' => 'Invalid password'])
+            ->withInput();
+        }        
     }
+
 
     public function dashboard()
     {
